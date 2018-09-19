@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/bgWhite">
+
+    <!--<WebView-->
+    <!--android:id="@+id/fragment_show_video_webView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"/>-->
+    <VideoView
+        android:id="@+id/frg_show_video_VideoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:id="@+id/video_layout_erorr_ll_layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/video_error_bg_color"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/video_layout_erorr_tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/error_not_found_network"
+            android:textColor="@color/white"
+            android:textSize="@dimen/video_error_tv_size" />
+
+        <Button
+            android:id="@+id/video_layout_erorr_btn_try_again"
+            style="@style/ButtonStyle"
+            android:text="@string/retry" />
+
+    </LinearLayout>
+
+
+    <!--<include-->
+    <!--android:id="@+id/yourView"-->
+    <!--layout="@layout/media_controller"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"></include>-->
+</RelativeLayout>

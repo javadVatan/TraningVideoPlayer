@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="bgWhite">#fbfbfb</color>
+
+    <color name="red">#FF0000</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#4c48b9</color>
+
+    <color name="sepreatorColor">#c95c5a5a</color>
+
+    <color name="scrollbar">#FFd1d1d1</color>
+
+    <!--start All color public-->
+    <color name="public_separator">#d1d1d1</color>
+    <color name="public_header_text">#000000</color>
+    <color name="public_sub_item_text">#717171</color>
+    <!--end All color public-->
+    <color name="MyQuestionSpinnerText">#FF717171</color>
+    <color name="View">#785c65</color>
+
+    <!--  start Video-->
+    <color name="video_category_selector">#d9d9d9</color>
+    <color name="video_time_bg_color">#cc383635</color>
+    <color name="video_error_bg_color">#484443</color>
+    <!--  End Video-->
+
+    <color name="selector">#f2f2f2</color>
+
+    <color name="pressed_button_bg">#8fe48d</color>
+    <color name="normal_button_bg">#eeeeee</color>
+    <color name="normal_button_text">#01870f</color>
+
+    <color name="greenlight">#e8cccccc</color>
+
+    <!--                ***************                         -**********************-->
+    <color name="edit_bg">#f6f6f6</color>
+    <color name="bg_getUser">#c6c6c6</color>
+    <color name="gradecard_detail_color">#5e5e5e</color>
+    <color name="gradecard_title_color">#000000</color>
+    <color name="Transparent">#00fffcfc</color>
+    <color name="ethint">#717171</color>
+    <color name="frg_payment_bg_tv">#52f1f1f1</color>
+
+
+    <!--slidingTabLayout Colors-->
+    <color name="slidingTabBackColor">#FF18668f</color>
+    <color name="IndicatorColor">#FF01870f</color>
+    <color name="textColorTabUnSelected">#000000</color>
+    <color name="textColorTabSelected">#FFffffff</color>
+    <color name="textColorTabPressed">#FFffffff</color>
+    <color name="backColorTabPressed">#FF01870f</color>
+
+
+    <!--Dialog Colors-->
+    <color name="colorBGDialog">#FFFFFFFF</color>
+    <color name="colorTextHeaderDialog">#FFffffff</color>
+    <color name="colorTextMessageDialog">#FF000000</color>
+    <color name="DialogButtonTextColor">#FF01870f</color>
+    <color name="DialogButtonTextColorPressed">#FF01870f</color>
+    <color name="DialogButtonTextColorDisable">#FF717171</color>
+    <color name="DialogButtonBGS">#00ffffff</color>
+    <color name="DialogButtonBGSelectColor">#FF8fe48d</color>
+    <color name="DialogButtonBGDisableColor">#FFd9d9d9</color>
+    <color name="DialogItemTextColor">#FF000000</color>
+    <color name="DialogItemPressTextColor">#FF000000</color>
+    <color name="DialogItemDisableTextColor">#FF717171</color>
+    <color name="DialogButtonBGLesson">#FFeeeeee</color>
+
+
+</resources>

@@ -1,0 +1,209 @@
+<resources>
+    <string name="app_name">آکادمی فردوسی</string>
+    <string name="question_maker">طراح سوال</string>
+    <string name="question_level">سطح سوال</string>
+    <string name="question_cont">تعداد سوالات</string>
+    <string name="start">شروع</string>
+    <array name="questionLevel">
+        <item>سخت</item>
+        <item>متوسط</item>
+        <item>آسان</item>
+    </array>
+
+
+    <string name="lesson_name">درس اول_آموزش صدای(س-سـ) </string>
+    <string name="condition">در حال بررسی</string>
+    <string name="error_type">خطای علمی</string>
+    <string name="user_message">در گزینه شماره ی دو جواب به صورت منفی درج شده است.خواهشمندم مورد ذکر شده را پیگیری و اصلاح نمایید</string>
+    <string name="title">عنوان</string>
+    <string name="sms_reg">پیام ؟!</string>
+    <string name="cheked">بررسی شده</string>
+    <string name="to_checking">در حال بررسی</string>
+    <string name="opnion">نظر</string>
+    <string name="error_scinitific">خطای علمی</string>
+    <string name="error_in_words">خطای املایی</string>
+
+    <!--***************************   start Video  *******************************************-->
+    <string name="retry">تلاش مجدد</string>
+    <string name="error_not_found_network">خطای برقراری در ارتباط! </string>
+    <string name="seen">"دیده شده: "</string>
+    <string name="error_un_expected">خطای غیر منتظره!</string>
+    <string name="corrects">صحیح:  </string>
+    <string name="un_corrects">غلط:  </string>
+    <string name="without_answer">"بدون جواب: "</string>
+    <string name="not_item_selected_for_remove">آیتمی برای حذف انتخاب نشده است.</string>
+    <string name="result_alert_for_nothig">تا کنون در آزمونی برای این درس شرکت نکرده اید.</string>
+    <string name="questions">سوال ها</string>
+    <string name="option1">گزینه یک</string>
+    <string name="option2">گزینه دو</string>
+    <string name="option3">گزینه سه</string>
+    <string name="option4">گزینه چهار</string>
+    <string name="number_all_questions">تعداد کل سوالات: </string>
+    <string name="result_number">نمره:</string>
+    <string name="pinted">نشان شده ها</string>
+    <string name="home">خانه</string>
+    <string name="downloading_data">در حال دریافت لیست...</string>
+
+    <array name="video_title">
+        <item>آکادمی فردوسی</item>
+        <!--    <item>رایانه</item>
+            <item>آموزشی</item>
+            <item>تکنولوژی</item>
+            <item>کودکان</item>
+            <item>مستند</item>-->
+
+    </array>
+
+    <integer-array name="video_count_title">
+        <item>1</item>
+        <!--     <item>4</item>
+             <item>14</item>
+             <item>1</item>
+             <item>1</item>
+             <item>1</item>-->
+    </integer-array>
+
+    <array name="video_links">
+        <item>
+            http://www.aparat.com/etc/api/videobyuser/username/goharimanesh
+        </item>
+        <!-- <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D9%85%D9%88%D8%A8%D8%A7%DB%8C%D9%84
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D8%AA%D8%A8%D9%84%D8%AA
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D9%84%D9%88%D8%A7%D8%B2%D9%85%20%D8%AC%D8%A7%D9%86%D8%A8%DB%8C%20%D9%85%D9%88%D8%A8%D8%A7%DB%8C%D9%84
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D8%AA%D8%B1%D9%81%D9%86%D8%AF%D9%87%D8%A7
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%DA%A9%D8%A7%D9%85%D9%BE%DB%8C%D9%88%D8%AA%D8%B1
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D9%84%D9%BE%20%D8%AA%D8%A7%D9%BE
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D9%86%D8%B1%D9%85%20%D8%A7%D9%81%D8%B2%D8%A7%D8%B1%20%D8%B1%D8%A7%DB%8C%D8%A7%D9%86%D9%87
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%D9%84%D9%88%D8%A7%D8%B2%D9%85%20%D8%AC%D8%A7%D9%86%D8%A8%DB%8C%20%D8%B1%D8%A7%DB%8C%D8%A7%D9%86%D9%87
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/parvaz99
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/paresh00
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/rahpouyan_co
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/yekmoallem.ir
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/TLearn.ir
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/dabirdsa
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/harimeelm
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/Physics_elearning
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/kankaash
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/KonkoorAcademy
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/maktabestan
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/farayand.konkur
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/konkor12
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/ShafaghKetab
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%DA%AF%D8%AC%D8%AA
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobytag/text/%DA%A9%D8%A7%D8%B1%D8%AA%D9%88%D9%86
+         </item>
+         <item>
+             http://www.aparat.com/etc/api/videobyuser/username/imostanad.biz
+         </item>-->
+    </array>
+
+    <array name="video_category_name">
+        <item>دکتر گوهری منش</item>
+        <!--     <item>موبایل</item>
+             <item>تبلت</item>
+             <item>لوازم جانبی موبایل</item>
+             <item>ترفندها</item>
+             <item>کامپیوتر</item>
+             <item>لپ تاپ</item>
+             <item>نرم افزار رایانه</item>
+             <item>لوازم جانبی رایانه</item>
+             <item>پرواز کنکوری ها</item>
+             <item>گروه آموزشی پرش</item>
+             <item>رهپویان دانش و اندیشه</item>
+             <item>یک معلم-آموزش ریاضی</item>
+             <item>تی لرن</item>
+             <item>دبیر دسا</item>
+             <item>جبرائیل حاجی زاده</item>
+             <item>فیزیک دان شویم</item>
+             <item>کنکاش</item>
+             <item>آکادمی کنکور</item>
+             <item>کنکور مکتبستان</item>
+             <item>کنکور-فرهیختگان شریف مهر</item>
+             <item>کنکور - استاد حسین احمدی</item>
+             <item>شفق کتاب</item>
+             <item>گجت</item>
+             <item>کارتون</item>
+             <item>آی مستند</item>-->
+    </array>
+
+    <integer-array name="video_api_mode">
+        <!--value api 0 for video by tag and value api 1 for video by user name -->
+        <item>1</item>
+        <!--       <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>0</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>1</item>
+               <item>0</item>
+               <item>0</item>
+               <item>1</item>-->
+    </integer-array>
+    <!--******************************  End Video *********************************************-->
+
+    <string name="processing">در حال بارگذاری</string>
+
+</resources>

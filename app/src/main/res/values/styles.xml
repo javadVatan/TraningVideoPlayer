@@ -1,0 +1,96 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="public_layoutWrap_content">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="MyQuestionSpinnerItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+    </style>
+
+    <!--***************************   start Video  *******************************************-->
+
+    <style name="video_ivAllIcon" parent="public_layoutWrap_content">
+        <item name="android:padding">2dp</item>
+        <item name="android:background">@drawable/selector</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="videoList_textViewDetail" parent="public_layoutWrap_content">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/public_sub_item_text</item>
+        <item name="android:textSize">@dimen/video_sub_item_text_size</item>
+    </style>
+
+    <style name="video_textViewTitle" parent="public_layoutWrap_content">
+        <item name="android:padding">@dimen/standard_padding_4dp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/public_header_text</item>
+        <item name="android:textSize">@dimen/video_title_item_text_size</item>
+    </style>
+
+    <style name="videoCat_textViewName" parent="public_layoutWrap_content">
+        <item name="android:padding">@dimen/standard_padding_4dp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/public_header_text</item>
+        <item name="android:textSize">@dimen/title_size</item>
+    </style>
+
+    <style name="videoCat_imageView" parent="public_layoutWrap_content">
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="videoCat_LinearLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">right</item>
+        <item name="android:background">@drawable/video_category_selector</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+
+    <!--******************************  End Video *********************************************-->
+    <style name="title_tv">
+        <item name="android:textColor">@color/gradecard_title_color</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textSize">@dimen/title_size</item>
+    </style>
+
+    <style name="ButtonStyle" parent="public_layoutWrap_content">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:minWidth">100dp</item>
+    </style>
+
+</resources>
