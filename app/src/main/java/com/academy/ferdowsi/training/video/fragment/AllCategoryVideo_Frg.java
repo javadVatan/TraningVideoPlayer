@@ -65,9 +65,9 @@ public class AllCategoryVideo_Frg extends Fragment
     }
 
     @Override
-    public void onItemAllCategoryClick(String catName, String url, int apiMode) {
+    public void onItemAllCategoryClick(String catName, String url) {
         //start video list fr
-        Fragment fragment = ListVideo_Frg.newInstance(url, catName, apiMode);
+        Fragment fragment = ListVideo_Frg.newInstance(url, catName);
         ((VideoActivity) getActivity()).switchFragment(fragment, true, "");
     }
 }

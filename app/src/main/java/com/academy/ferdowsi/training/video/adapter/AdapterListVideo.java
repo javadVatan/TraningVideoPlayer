@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.academy.ferdowsi.training.R;
 import com.academy.ferdowsi.training.dataBase.ManageDBFavoriteVideo;
 import com.academy.ferdowsi.training.global.Constants;
-import com.academy.ferdowsi.training.video.struct.StructListVideo;
+import com.academy.ferdowsi.training.video.model.AparatModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -21,12 +21,12 @@ import java.util.List;
 
 public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.ViewHolder> {
     private int itemLayout;
-    private List<StructListVideo> dataListVideo;
+    private List<AparatModel.Videobyprofilecat> dataListVideo;
     private Context mContext;
     private AdapterVideoHandler videoHandler;
     private Typeface currFont;
 
-    public AdapterListVideo(int itemLayout, List<StructListVideo> dataListVideo,
+    public AdapterListVideo(int itemLayout, List<AparatModel.Videobyprofilecat> dataListVideo,
                             AdapterVideoHandler videoHandler) {
         this.videoHandler = videoHandler;
         this.itemLayout = itemLayout;
@@ -44,13 +44,13 @@ public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         ManageDBFavoriteVideo manageDBFavoriteVideo = ManageDBFavoriteVideo.getInstance();
-        String videoId = dataListVideo.get(position).getVideoId();
+        String videoId = dataListVideo.get(position).getId();
         String uid = dataListVideo.get(position).getUid();
 
-        holder.tvVideoName.setText(dataListVideo.get(position).getVideoName());
+        holder.tvVideoName.setText(dataListVideo.get(position).getTitle());
         holder.tvSeenNumber.setText(
-                mContext.getString(R.string.seen) + dataListVideo.get(position).getSeen());
-        holder.tvDate.setText(dataListVideo.get(position).getDate());
+                mContext.getString(R.string.seen) + dataListVideo.get(position).getVisit_cnt());
+        holder.tvDate.setText(dataListVideo.get(position).getCreate_date());
 
         if (manageDBFavoriteVideo.checkIsDataAlreadyInDBorNot(videoId, uid)) {
             holder.ivFavorite.setImageResource(R.drawable.ic_video_start_fill);
@@ -67,7 +67,7 @@ public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.View
         holder.tvSeenNumber.setTypeface(currFont);
         holder.tvDuration.setTypeface(currFont);
 
-        getImage(holder.ivImageVideo, dataListVideo.get(position).getUrlPerViewImage(),
+        getImage(holder.ivImageVideo, dataListVideo.get(position).getSmall_poster(),
                 holder.pbProfileUser);
     }
 
@@ -130,7 +130,7 @@ public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.View
                 @Override
                 public void onClick(View view) {
                     videoHandler.onItemListVideoClick(
-                            dataListVideo.get(getLayoutPosition()).getVideoName(),
+                            dataListVideo.get(getLayoutPosition()).getTitle(),
                             dataListVideo.get(getLayoutPosition()).getUid());
                 }
             });
@@ -150,7 +150,7 @@ public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.View
 
                     break;
                 case R.id.item_video_iv_share:
-                    videoHandler.onShare(dataListVideo.get(getLayoutPosition()).getUrlVideo());
+                    videoHandler.onShare(dataListVideo.get(getLayoutPosition()).getUid());
                     break;
             }
         }
@@ -159,14 +159,14 @@ public class AdapterListVideo extends RecyclerView.Adapter<AdapterListVideo.View
             ManageDBFavoriteVideo manageDBFavoriteVideo = ManageDBFavoriteVideo.getInstance();
 
             boolean status = manageDBFavoriteVideo.checkIsDataAlreadyInDBorNot(
-                    dataListVideo.get(getLayoutPosition()).getVideoId(),
+                    dataListVideo.get(getLayoutPosition()).getId(),
                     dataListVideo.get(getLayoutPosition()).getUid());
             if (!status) {
                 manageDBFavoriteVideo.insertFavorite(dataListVideo.get(getLayoutPosition()));
                 viewHolder.ivFavorite.setImageResource(R.drawable.ic_video_start_fill);
             } else {
                 manageDBFavoriteVideo.deleteFavorite(
-                        dataListVideo.get(getLayoutPosition()).getVideoId());
+                        dataListVideo.get(getLayoutPosition()).getId());
                 videoHandler.onRemoveFavorite(getLayoutPosition());
                 viewHolder.ivFavorite.setImageResource(R.drawable.ic_video_star_border);
             }

@@ -37,8 +37,7 @@ public class AdapterAllCategoryVideo extends RecyclerView.Adapter<AdapterAllCate
         switch (view.getId()) {
             case R.id.item_all_cat_video_ll_root:
                 categoryAllHandler.onItemAllCategoryClick(dataList.get(pos).getCategoryName(),
-                        dataList.get(pos).getUrl(),
-                        dataList.get(pos).getFlag());
+                        dataList.get(pos).getUrl());
                 break;
         }
     }
@@ -64,7 +63,7 @@ public class AdapterAllCategoryVideo extends RecyclerView.Adapter<AdapterAllCate
     }
 
     public interface AdapterAllCategoryVideoHandler {
-        void onItemAllCategoryClick(String catName, String url, int apiMode);
+        void onItemAllCategoryClick(String catName, String url);
     }
 
     public class ViewHolder1 extends RecyclerView.ViewHolder {

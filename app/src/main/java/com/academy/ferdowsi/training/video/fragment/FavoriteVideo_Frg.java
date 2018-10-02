@@ -14,7 +14,7 @@ import com.academy.ferdowsi.training.dataBase.ManageDBFavoriteVideo;
 import com.academy.ferdowsi.training.global.GlobalFunction;
 import com.academy.ferdowsi.training.video.VideoActivity;
 import com.academy.ferdowsi.training.video.adapter.AdapterListVideo;
-import com.academy.ferdowsi.training.video.struct.StructListVideo;
+import com.academy.ferdowsi.training.video.model.AparatModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class FavoriteVideo_Frg extends Fragment implements AdapterListVideo.Adap
 
 
     private View currView;
-    private List<StructListVideo> dataListVideo = new ArrayList<>();
+    private List<AparatModel.Videobyprofilecat> dataListVideo = new ArrayList<>();
     private Context mContext;
     private AdapterListVideo adapterListVideo;
 
@@ -44,10 +44,8 @@ public class FavoriteVideo_Frg extends Fragment implements AdapterListVideo.Adap
     private void getDataFromDataBase() {
         ManageDBFavoriteVideo manageDBFavoriteVideo = ManageDBFavoriteVideo.getInstance();
         dataListVideo.clear();
-        StructListVideo[] struct = manageDBFavoriteVideo.getAllFavoriteInfo();
-        for (int i = 0; i < struct.length; i++) {
-            dataListVideo.add(struct[i]);
-        }
+        AparatModel mAparatModel = manageDBFavoriteVideo.getAllFavoriteInfo();
+        dataListVideo.addAll(mAparatModel.getVideobyprofilecat());
     }
 
     private void initList() {

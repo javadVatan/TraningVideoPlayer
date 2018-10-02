@@ -5,13 +5,14 @@ public class StructCategorySub {
     private String categoryName;
     private int image;
     private String url;
-    private int flag;
+
+    public StructCategorySub() {
+    }
 
     public StructCategorySub(String categoryName, int image, String url, int flag) {
         this.categoryName = categoryName;
         this.image = image;
         this.url = url;
-        this.flag = flag;
     }
 
     public String getCategoryName() {
@@ -26,7 +27,16 @@ public class StructCategorySub {
         return url;
     }
 
-    public int getFlag() {
-        return flag;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
 }

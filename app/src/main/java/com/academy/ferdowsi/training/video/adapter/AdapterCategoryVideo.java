@@ -84,14 +84,12 @@ public class AdapterCategoryVideo extends RecyclerView.Adapter<AdapterCategoryVi
         switch (view.getId()) {
             case R.id.item_cat_video_item_first:
                 categoryVideoHandler.onItemCategoryClick(dataListVideo.get(pos).getList().get(0).getCategoryName(),
-                        dataListVideo.get(pos).getList().get(0).getUrl(),
-                        dataListVideo.get(pos).getList().get(0).getFlag());
+                        dataListVideo.get(pos).getList().get(0).getUrl());
                 break;
 
             case R.id.item_cat_video_item_second:
                 categoryVideoHandler.onItemCategoryClick(dataListVideo.get(pos).getList().get(1).getCategoryName(),
-                        dataListVideo.get(pos).getList().get(1).getUrl(),
-                        dataListVideo.get(pos).getList().get(1).getFlag());
+                        dataListVideo.get(pos).getList().get(1).getUrl());
                 break;
             case R.id.item_cat_video_linear_more:
                 categoryVideoHandler.onItemMoreClick(dataListVideo.get(pos).getTitle(),
@@ -101,7 +99,7 @@ public class AdapterCategoryVideo extends RecyclerView.Adapter<AdapterCategoryVi
     }
 
     public interface AdapterCategoryVideoHandler {
-        void onItemCategoryClick(String catName, String url, int apiMode);
+        void onItemCategoryClick(String catName, String url);
 
         void onItemMoreClick(String title, ArrayList<StructCategorySub> structCategorySub_ArrayList);
     }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.academy.ferdowsi.training.dataBase.global.ManageSqlLiteInMemory;
+import com.academy.ferdowsi.training.video.model.AparatModel;
 import com.academy.ferdowsi.training.video.struct.StructListVideo;
 
 public class ManageDBFavoriteVideo {
@@ -49,8 +50,8 @@ public class ManageDBFavoriteVideo {
         return res;
     }
 
-    public StructListVideo[] getAllFavoriteInfo() {
-        StructListVideo[] listVideo;
+    public AparatModel getAllFavoriteInfo() {
+        AparatModel mAparatModel = new AparatModel();
         String[] cols = {ID_MyFavoriteVideo, UID_MyFavoriteVideo, VIDEO_ID, NAME_MyFavoriteVideo,
                 SEEN_MyFavoriteVideo, DATE_MyFavoriteVideo, URL_Video_MyFavoriteVideo,
                 URL_lPerViewImage_MyFavoriteVideo, DURATION_MyFavoriteVideo};
@@ -59,25 +60,25 @@ public class ManageDBFavoriteVideo {
         Cursor cursor = getDataBase().query(TABALE_MyFavoriteVideo, cols, selection, null, null, null,
                 null);
         cursor.moveToFirst();
-        listVideo = new StructListVideo[cursor.getCount()];
-        for (int i = 0; i < listVideo.length; i++) {
-            listVideo[i] = new StructListVideo();
+        AparatModel.Videobyprofilecat listVideoRow = new AparatModel.Videobyprofilecat();
+        for (int i = 0; i < cursor.getCount(); i++) {
 
-            listVideo[i].id = cursor.getInt(cursor.getColumnIndex(ID_MyFavoriteVideo));
-            listVideo[i].uid = cursor.getString(cursor.getColumnIndex(UID_MyFavoriteVideo));
-            listVideo[i].videoId = cursor.getString(cursor.getColumnIndex(VIDEO_ID));
-            listVideo[i].videoName = cursor.getString(cursor.getColumnIndex(NAME_MyFavoriteVideo));
-            listVideo[i].seen = cursor.getString(cursor.getColumnIndex(SEEN_MyFavoriteVideo));
-            listVideo[i].date = cursor.getString(cursor.getColumnIndex(DATE_MyFavoriteVideo));
-            listVideo[i].urlVideo = cursor.getString(cursor.getColumnIndex(URL_Video_MyFavoriteVideo));
-            listVideo[i].urlPerViewImage = cursor.getString(cursor.getColumnIndex(
-                    URL_lPerViewImage_MyFavoriteVideo));
-            listVideo[i].duration = cursor.getInt(cursor.getColumnIndex(DURATION_MyFavoriteVideo));
+            listVideoRow.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex(ID_MyFavoriteVideo))));
+            listVideoRow.setUid(cursor.getString(cursor.getColumnIndex(UID_MyFavoriteVideo)));
+            listVideoRow.setId(cursor.getString(cursor.getColumnIndex(VIDEO_ID)));
+            listVideoRow.setTitle(cursor.getString(cursor.getColumnIndex(NAME_MyFavoriteVideo)));
+            listVideoRow.setVisit_cnt(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEEN_MyFavoriteVideo))));
+            listVideoRow.setCreate_date(cursor.getString(cursor.getColumnIndex(DATE_MyFavoriteVideo)));
+            listVideoRow.setUid(cursor.getString(cursor.getColumnIndex(URL_Video_MyFavoriteVideo)));
+            listVideoRow.setSmall_poster(cursor.getString(cursor.getColumnIndex(
+                    URL_lPerViewImage_MyFavoriteVideo)));
+            listVideoRow.setDuration(cursor.getInt(cursor.getColumnIndex(DURATION_MyFavoriteVideo)));
 
+            mAparatModel.getVideobyprofilecat().add(listVideoRow);
             cursor.moveToNext();
         }
         cursor.close();
-        return listVideo;
+        return mAparatModel;
     }
 
     public boolean checkIsDataAlreadyInDBorNot(String videoId, String uid) {
@@ -123,16 +124,16 @@ public class ManageDBFavoriteVideo {
 
     }
 
-    public int insertFavorite(StructListVideo structListVideo) {
+    public int insertFavorite(AparatModel.Videobyprofilecat structListVideo) {
         long res;
         ContentValues values = new ContentValues();
-        values.put(VIDEO_ID, structListVideo.getVideoId());
+        values.put(VIDEO_ID, structListVideo.getId());
         values.put(UID_MyFavoriteVideo, structListVideo.getUid());
-        values.put(NAME_MyFavoriteVideo, structListVideo.getVideoName());
-        values.put(SEEN_MyFavoriteVideo, structListVideo.getSeen());
-        values.put(DATE_MyFavoriteVideo, structListVideo.getDate());
-        values.put(URL_Video_MyFavoriteVideo, structListVideo.getUrlVideo());
-        values.put(URL_lPerViewImage_MyFavoriteVideo, structListVideo.getUrlPerViewImage());
+        values.put(NAME_MyFavoriteVideo, structListVideo.getTitle());
+        values.put(SEEN_MyFavoriteVideo, structListVideo.getVisit_cnt());
+        values.put(DATE_MyFavoriteVideo, structListVideo.getCreate_date());
+        values.put(URL_Video_MyFavoriteVideo, structListVideo.getFrame());
+        values.put(URL_lPerViewImage_MyFavoriteVideo, structListVideo.getSmall_poster());
         values.put(DURATION_MyFavoriteVideo, structListVideo.getDuration());
 
         res = getDataBase().insert(TABALE_MyFavoriteVideo, null, values);

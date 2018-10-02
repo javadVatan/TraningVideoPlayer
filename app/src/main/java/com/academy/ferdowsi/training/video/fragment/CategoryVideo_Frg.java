@@ -58,11 +58,13 @@ public class CategoryVideo_Frg extends Fragment implements AdapterCategoryVideo.
         for (int i = 0; i < mContext.getResources().getStringArray(R.array.video_title).length; i++) {
             arraySub = new ArrayList<>();
             for (; j < mContext.getResources().getIntArray(R.array.video_count_title)[i] + arraySize; j++) {
-                StructCategorySub structCategorySub = new StructCategorySub(mContext.getResources().getStringArray(R.array.video_category_name)[j],
-                        imgId[j], mContext.getResources().getStringArray(R.array.video_links)[j],
-                        mContext.getResources().getIntArray(R.array.video_api_mode)[j]);
-                arraySub.add(structCategorySub);
+                StructCategorySub struct = new StructCategorySub();
+                struct.setCategoryName(mContext.getResources().getStringArray(R.array.video_category_name)[j]);
+                struct.setImage(imgId[j]);
+                struct.setUrl(mContext.getResources().getStringArray(R.array.video_links)[j]);
+                arraySub.add(struct);
             }
+
             StructCategoryMaster structCategoryMaster = new StructCategoryMaster(mContext.getResources().getStringArray
                     (R.array.video_title)[i], arraySub);
             dataListVideo.add(structCategoryMaster);
@@ -81,9 +83,9 @@ public class CategoryVideo_Frg extends Fragment implements AdapterCategoryVideo.
     }
 
     @Override
-    public void onItemCategoryClick(String catName, String url, int apiMode) {
+    public void onItemCategoryClick(String catName, String url) {
         //start video list frg
-        Fragment fragment = ListVideo_Frg.newInstance(url, catName, apiMode);
+        Fragment fragment = ListVideo_Frg.newInstance(url, catName);
         ((VideoActivity) getActivity()).switchFragment(fragment, true, "");
     }
 
