@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="@color/bgWhite">
 
@@ -10,13 +11,34 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:layout_centerInParent="true"/>-->
-    <VideoView
-        android:id="@+id/frg_show_video_VideoView"
+
+    <!-- <VideoView
+         android:id="@+id/frg_show_video_VideoView"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+  />
+ -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="3">
 
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/activity_play_track_exo_player"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1.2"
+
+            android:visibility="visible"
+            app:resize_mode="fill"
+
+            app:surface_type="surface_view"
+            app:use_artwork="true"
+            app:use_controller="true" />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/video_layout_erorr_ll_layout_error"
         android:layout_width="match_parent"

@@ -8,8 +8,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
+
+import com.academy.ferdowsi.training.R;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /*
 import com.mobiliha.activity.DownloadQueue;
@@ -121,10 +128,37 @@ public class GlobalFunction {
             mcontext.startActivity(intent);
     }
 
+    public void openBrowserChrome(Context mContext, String url) {
+        // Use a CustomTabsIntent.Builder to configure CustomTabsIntent.
+// Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
+// and launch the desired Url with CustomTabsIntent.launchUrl()
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.enableUrlBarHiding();
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(mContext, Uri.parse(url));
+        builder.setToolbarColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+    }
 
     public void deleteFile(String fileName) {
         File file = new File(fileName);
         file.delete();
     }
+
+    public String md5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger number = new BigInteger(1, messageDigest);
+            StringBuilder hashtext = new StringBuilder(number.toString(16));
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while (hashtext.length() < 32) {
+                hashtext.insert(0, "0");
+            }
+            return hashtext.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return input;
+        }
+    }
+
 
 }

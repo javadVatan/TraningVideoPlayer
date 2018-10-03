@@ -1,58 +1,61 @@
 package com.academy.ferdowsi.training.video.fragment;
 
-import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.academy.ferdowsi.training.R;
+import com.academy.ferdowsi.training.core.api.ApiMethod;
 import com.academy.ferdowsi.training.global.Constants;
 import com.academy.ferdowsi.training.global.GlobalFunction;
 import com.academy.ferdowsi.training.global.ProgressMyDialog;
+import com.academy.ferdowsi.training.video.model.AparatVideoInfo;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import io.reactivex.observers.DisposableObserver;
 
 
-public class ShowVideo_Frg extends Fragment implements MediaPlayer.OnPreparedListener {
-    private static final String TAG_LINK = "Hash";
-    private static final String FILE_LINK = "file_link";
-    private final String JSON_ARRAY_NAME = "videoadvanceinfo";
-    private View view;
-    private String jsonLink = "http://aparat.com/etc/api/videoAdvanceInfo/videohash/";
-    private String jsonLink2 = "/secid/mojemobile/seckey/";
-    private String publishid = "/publisherid/511560";
-    private String playLink;
-    private VideoView wvShowVideo;
+public class ShowVideo_Frg extends Fragment {
+    private static final String TAG_UUID = "Hash";
+    private View currView;
+
+    private String playLink, apiUrl;
     private LinearLayout ll_layoutError;
     private ProgressMyDialog progressMyDialog;
-    private String hashvideo = "";
-    private Context context;
-    private String privateKey = "381377b5a83c07caef0448400550fa55";
-    private boolean errorHappened;
+    private String currUuid = "";
+    private ApiMethod mApiMethod;
+    private SimpleExoPlayer mExoPlayer;
+    private TrackSelector trackSelector = null;
+    private PlayerView mExoPlayerView;
 
-
-    public static Fragment newInstance(String link) {
+    public static Fragment newInstance(String uuid) {
         Fragment fragment = new ShowVideo_Frg();
         Bundle bundle = new Bundle();
-        bundle.putString(TAG_LINK, link);
+        bundle.putString(TAG_UUID, uuid);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -62,60 +65,137 @@ public class ShowVideo_Frg extends Fragment implements MediaPlayer.OnPreparedLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        hashvideo = bundle.getString(TAG_LINK);
-
+        currUuid = bundle.getString(TAG_UUID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frg_show_videoview, container, false);
-        context = getContext();
-        wvShowVideo = view.findViewById(R.id.frg_show_video_VideoView);
-        ll_layoutError = view.findViewById(R.id.video_layout_erorr_ll_layout_error);
-/*        EncryptDescrypt encryptDescrypt = new EncryptDescrypt();
-        String hash2 = encryptDescrypt.getHexMd5(hashvideo+privateKey);
-        jsonLink = jsonLink+hashvideo+jsonLink2+hash2+publishid;*/
+        currView = inflater.inflate(R.layout.frg_show_videoview, container, false);
 
+        initializer();
 
-        // TODO: 11/6/2016  below code cemented for test by vatanDoost
-
-        // showMyDialog();
-        // executeAsyncTask();
-        wvShowVideo.setVideoURI(Uri.parse(hashvideo));
-
-        return view;
+        return currView;
     }
 
-    private void executeAsyncTask() {
-        if (!GlobalFunction.getInstance().isConnection(context)) {
+    private void initializer() {
+        initVariable();
+        initExoPlayer();
+        createLink();
+        callApiGetVideoInfo();
+    }
+
+    private void initVariable() {
+        mApiMethod = new ApiMethod();
+        ll_layoutError = currView.findViewById(R.id.video_layout_erorr_ll_layout_error);
+        mExoPlayerView = currView.findViewById(R.id.activity_play_track_exo_player);
+    }
+
+    /**
+     * set ExoPlayer that use for playing audio and video
+     */
+    private void initExoPlayer() {
+        Player.EventListener mExoListener = new Player.EventListener() {
+
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+                dismissMyDialog();
+                mExoPlayer.setPlayWhenReady(true);
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            }
+
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
+
+            }
+
+            @Override
+            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+            }
+
+            @Override
+            public void onPositionDiscontinuity(int reason) {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+
+            @Override
+            public void onSeekProcessed() {
+
+            }
+        };
+
+        // Here is the Application wanna show Video
+
+        if (trackSelector == null) {
+            BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+        }
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
+
+        //region exoPlayer listener
+        mExoPlayer.addListener(mExoListener);
+        //endregion
+
+
+    }
+
+    private void createLink() {
+        String secretLink = getContext().getResources().getString(R.string.secret_link);
+        String publishId = getContext().getResources().getString(R.string.publish_id);
+        String privateKey = getContext().getResources().getString(R.string.private_key);
+
+        String hash2 = GlobalFunction.getInstance().md5(currUuid + privateKey);
+        apiUrl = Constants.API_VIDEO_HASH + currUuid + secretLink + hash2 + publishId;
+    }
+
+    private void callApiGetVideoInfo() {
+        if (!GlobalFunction.getInstance().isConnection(getContext())) {
             displayErrorMessage(getString(R.string.error_not_found_network));
-        } else {
-            (new DownloadJson()).execute();
+            return;
         }
-    }
 
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        dismissMyDialog();
-        wvShowVideo.start();
-    }
+        showMyDialog();
 
-    private void makeJSON(String finalJson) {
-        try {
-            JSONObject parentObject = new JSONObject(finalJson);
-            JSONObject parentArray = parentObject.getJSONObject(JSON_ARRAY_NAME);
+        mApiMethod.getVideoInfo(apiUrl, new DisposableObserver<AparatVideoInfo>() {
+            @Override
+            public void onNext(AparatVideoInfo aparatVideoInfo) {
+                playLink = aparatVideoInfo.getVideoadvanceinfo().getFile_link();
+                ShowVideo();
+            }
 
-//            for (int i = 0; i < parentArray.length(); i++) {
-//                JSONObject object = parentArray.getJSONObject(i);
+            @Override
+            public void onError(Throwable e) {
+                displayErrorMessage(getString(R.string.error_un_expected));
+                dismissMyDialog();
+            }
 
-            playLink = parentArray.getString(FILE_LINK);
+            @Override
+            public void onComplete() {
 
-//            }
-
-        } catch (Exception e) {
-            errorHappened = true;
-            e.printStackTrace();
-        }
+            }
+        });
     }
 
     private void showMyDialog() {
@@ -135,65 +215,41 @@ public class ShowVideo_Frg extends Fragment implements MediaPlayer.OnPreparedLis
         }
     }
 
-    private void loadVideo() {
 
-        if (GlobalFunction.getInstance().isConnection(getContext())) {
-            ShowVide();
-        } else {
-            displayErrorMessage(getContext().getString(R.string.error_not_found_network));
-        }
-    }
-
-    private void ShowVide() {
+    private void ShowVideo() {
         ll_layoutError.setVisibility(View.GONE);
-        wvShowVideo.setVisibility(View.VISIBLE);
-
-        try {
-            // Start the MediaController
-            MediaController mediacontroller = new MediaController(
-                    context);
-            mediacontroller.setAnchorView(wvShowVideo);
-            // Get the URL from String VideoURL
-            Uri video = Uri.parse(playLink);
-            wvShowVideo.setMediaController(mediacontroller);
-            wvShowVideo.setVideoURI(video);
-        } catch (Exception e) {
-            Log.i("Erorr", e.getMessage());
-            e.printStackTrace();
-            dismissMyDialog();
-        }
-        wvShowVideo.requestFocus();
-        wvShowVideo.setOnPreparedListener(this);
-        wvShowVideo.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                wvShowVideo.stopPlayback();
-                dismissMyDialog();
-                //((Activity)context).finish();
-                return false;
-            }
-        });
+        mExoPlayer.prepare(buildMediaSource(Uri.parse(playLink)));
+        mExoPlayerView.setPlayer(mExoPlayer);
     }
 
-    public void stopVideo() {
-//        wvShowVideo.destroy();
+    /**
+     * Create a MediaSource for ExoPlayer.
+     *
+     * @param uri
+     * @return MediaSource.
+     */
+    private MediaSource buildMediaSource(Uri uri) {
+        MediaSource mMediaSource;
 
-        try {
-
-            wvShowVideo.stopPlayback();
-
-        } catch (Exception exp) {
-            exp.printStackTrace();
-        }
+        // manage online videoPlay
+        // Measures bandwidth during playback. Can be null if not required.
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+                Util.getUserAgent(getContext(), "App Training"), bandwidthMeter);
+        // This is the MediaSource representing the media to be played.
+        mMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(uri);
+        return mMediaSource;
     }
+
 
     private void displayErrorMessage(String strError) {
-        wvShowVideo.setVisibility(View.INVISIBLE);
         dismissMyDialog();
 
         ll_layoutError.setVisibility(View.VISIBLE);
-        TextView errorText = view.findViewById(R.id.video_layout_erorr_tv_error);
-        Button btnTryAgain = view.findViewById(R.id.video_layout_erorr_btn_try_again);
+        TextView errorText = currView.findViewById(R.id.video_layout_erorr_tv_error);
+        Button btnTryAgain = currView.findViewById(R.id.video_layout_erorr_btn_try_again);
         errorText.setTypeface(Constants.iranSansLight);
         errorText.setText(strError);
 
@@ -201,70 +257,14 @@ public class ShowVideo_Frg extends Fragment implements MediaPlayer.OnPreparedLis
             @Override
             public void onClick(View view) {
                 ll_layoutError.setVisibility(View.GONE);
-                loadVideo();
+                callApiGetVideoInfo();
             }
         });
 
     }
 
-    private class DownloadJson extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected String doInBackground(String... json_address) {
-            HttpURLConnection connection = null;
-            BufferedReader bReader = null;
-            String finalJson = null;
-
-            try {
-                URL url = new URL(jsonLink);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                InputStream inputStream = connection.getInputStream();
-
-                bReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
-                StringBuilder sBuilder = new StringBuilder();
-
-                String line;
-                while ((line = bReader.readLine()) != null) {
-                    sBuilder.append(line).append("\n");
-                }
-                finalJson = sBuilder.toString();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-
-                if (bReader != null)
-                    try {
-                        bReader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
-            return finalJson;
-        }
-
-        @Override
-        protected void onPostExecute(String finalJson) {
-
-            makeJSON(finalJson);
-
-            if (errorHappened) {
-                displayErrorMessage(getString(R.string.error_un_expected));
-            } else {
-                dismissMyDialog();
-                loadVideo();
-//                setAdapter();
-            }
-        }
+    public void stopVideo() {
+        if (mExoPlayer != null && mExoPlayer.getPlayWhenReady())
+            mExoPlayer.setPlayWhenReady(false);
     }
-
 }

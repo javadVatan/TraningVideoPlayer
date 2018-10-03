@@ -18,7 +18,7 @@ public class ProgressMyDialog {
     private int resID;
     private ProgressDialog progressBar;
     private ImageView imageView;
-    private Animation rotation;
+    private RotateAnimation rotation;
     private View view;
 
     public ProgressMyDialog(Context context, int resourceIdOfImage) {
@@ -29,9 +29,14 @@ public class ProgressMyDialog {
         view = inflater.inflate(R.layout.dialog_wait, null);
         imageView = view.findViewById(R.id.blankImageView);
         imageView.setBackgroundResource(resID);
-        rotation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotation.setRepeatMode(Animation.INFINITE);
+        rotation = new RotateAnimation(
+                0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
         rotation.setDuration(1000);
+        rotation.setRepeatCount(Animation.INFINITE);
+        imageView.startAnimation(rotation);
 
         TextView tvM;
         tvM = view.findViewById(R.id.tvSubject);

@@ -25,8 +25,7 @@ import com.academy.ferdowsi.training.video.model.AparatModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 public class ListVideo_Frg extends Fragment implements AdapterListVideo.AdapterVideoHandler,
         View.OnClickListener {
@@ -149,7 +148,6 @@ public class ListVideo_Frg extends Fragment implements AdapterListVideo.AdapterV
     }
 
     private void setAdapter() {
-
         mRecyclerView.setVisibility(View.VISIBLE);
         adapterListVideo.notifyItemRangeInserted(positionEndOfList,/* positionEndOfList -*/
                 dataListVideo.size());
@@ -225,10 +223,7 @@ public class ListVideo_Frg extends Fragment implements AdapterListVideo.AdapterV
             pbBelowList.setVisibility(View.VISIBLE);
         }
 
-        mApiMethod.getVideos(currID, new Observer<AparatModel>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
+        mApiMethod.getVideos(currID, new DisposableObserver<AparatModel>() {
 
             @Override
             public void onNext(AparatModel aparatModel) {
